@@ -187,7 +187,8 @@ extern "C" {
     */
     void FLASH_EraseBlock(uint16_t startAddr);
 
-    uint16_t FLASH_WriteCycles(void);
+    uint16_t FLASH_GetAllWrites(void);
+    uint16_t FLASH_GetBlockWrites(void);
 #ifdef __cplusplus  // Provide C++ Compatibility
 }
 

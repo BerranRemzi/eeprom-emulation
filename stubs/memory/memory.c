@@ -56,7 +56,10 @@
 */
 uint16_t usedFlashWords = UINT16_MAX;
 uint16_t flashContainer[END_FLASH];
-uint16_t writeCycles = 0;
+
+uint16_t firstWrittenBlockAddr = UINT16_MAX;
+uint16_t allWritesCount = 0;
+uint16_t blockWritesCount = 0;
 
 uint16_t FLASH_ReadWord(uint16_t flashAddr)
 {
@@ -104,7 +107,15 @@ int8_t FLASH_WriteBlock(uint16_t writeAddr, const uint16_t* flashWordArray)
         writeAddr++;
     }
 
-    writeCycles++;
+    allWritesCount++;
+
+    if (UINT16_MAX == firstWrittenBlockAddr) {
+        firstWrittenBlockAddr = blockStartAddr;
+    }
+    if (blockStartAddr == firstWrittenBlockAddr) {
+        blockWritesCount++;
+    }
+
     if (usedFlashWords == UINT16_MAX) {
         usedFlashWords = blockStartAddr;
     }
@@ -120,9 +131,13 @@ void FLASH_EraseBlock(uint16_t startAddr)
         flashContainer[blockStartAddr + i] = 0x3FFF;
     }
 }
-uint16_t FLASH_WriteCycles(void)
+uint16_t FLASH_GetAllWrites(void)
 {
-    return writeCycles;
+    return allWritesCount;
+}
+uint16_t FLASH_GetBlockWrites(void)
+{
+    return blockWritesCount;
 }
 /**
  End of File

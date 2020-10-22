@@ -35,10 +35,10 @@ int main() {
     uint16_t errorCount = Test_GetErrorCount(inputBuffer, outputBuffer, EEPROM_SIZE);
 
     /* Test_PrintBufferAsByte debug data */
-    printf("\nUsed FlashWords  = %4d\n", Eeprom_GetUsedSize());
-    printf("Flash writes     = %4d\n", FLASH_WriteCycles());
-    printf("Used EepromBytes = %4d\n\n", (int)sizeof(outputBuffer));
-    printf("Error count      = %4d\n", errorCount);
+    printf("\nUsed FlashWords    = %4d\n", Eeprom_GetUsedSize());
+    printf("Flash block writes = %4d\n", FLASH_GetBlockWrites());
+    printf("Used EepromBytes   = %4d\n\n", (int)sizeof(outputBuffer));
+    printf("Error count        = %4d\n", errorCount);
 
     return errorCount;
 }
